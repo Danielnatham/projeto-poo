@@ -9,24 +9,26 @@ Projeto criado para ultima nota da disciplina de Programação Orientada a Objet
 O projeto ainda está em desenvolvimento e as próximas atualizações serão voltadas nas seguintes tarefas:
 
 - Classe Livro
-	- [ ] Implementar funções no arquivo livro.h
-	- [ ] Ajustar arquivo livro.cpp 
+  - [ ] Implementar funções no arquivo livro.h
+  - [ ] Ajustar arquivo livro.cpp
 - Classe Biblioteca
-	- [ ] Implementar o CRUD
-	- [ ] Implementar as funções extras
+  - [ ] Implementar o CRUD
+  - [ ] Implementar as funções extras
 - Classe Usuário
-	- [ ] Implementar os getters e setters
-	- [ ] Ajustar propriedade de livros emprestados
+  - [ ] Implementar os getters e setters
+  - [ ] Ajustar propriedade de livros emprestados
 - Classe Empréstimo e Classe Reserva
-	- [ ] Implementar as funções nescessarias
+  - [ ] Implementar as funções nescessarias
 - Classe Periódico, Item e Monografia
-	- [ ] Criar as propriedades
-	- [ ] Implementar funções
-## 🚀 Inicializando a  Biblioteca
+  - [ ] Criar as propriedades
+  - [ ] Implementar funções
+
+## 🚀 Inicializando a Biblioteca
 
 Para iniciar a biblioteca, siga estas etapas:
 
 Linux :
+
 ```
 gcc ./software.cpp
 ```
@@ -38,3 +40,4 @@ Agradecemos às seguintes pessoas que contribuíram para este projeto:
 - Daniel Nathan
 - Jeiel Matheus
 - Guttemberg Dantas
+- Gregory

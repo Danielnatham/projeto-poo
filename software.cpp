@@ -2,7 +2,7 @@
 #include<vector>
 #include<string>
 
-#include "Livro.h"
+#include "livro.h"
  
 using namespace std;
 
@@ -50,9 +50,15 @@ public:
    Usuario(string p_cpf, string p_nome, string p_datanascimento);
    ~Usuario();
    void livrosemprestadosUsuario();//determina quais livros estao com o usuario
-   string get_cpf();
-   string get_nome();
-   string get_datanascimento();
+   string get_cpf(){
+      return cpf;
+   };
+   string get_nome(){
+      return nome;
+   };
+   string get_datanascimento(){
+      return datanascimento;
+   };
 };
  
 Usuario::Usuario(string p_cpf, string p_nome, string p_datanascimento){
@@ -66,7 +72,10 @@ Usuario::~Usuario()
 class Emprestimo
 {
 private:
-   /* data */
+   string dataemprestimo;
+   Usuario user;
+   Livro livro; 
+   
 public:
    Emprestimo(/* args */);
    ~Emprestimo();
