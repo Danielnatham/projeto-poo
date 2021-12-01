@@ -1,13 +1,15 @@
 //Controle e Gerenciamento de uma Biblioteca.
 #include<vector>
 #include<string>
+#include<iostream>
 
 #include "livro.h"
  
 using namespace std;
 
 class Usuario;
- 
+
+
 class Biblioteca
 {
 private:
@@ -35,34 +37,38 @@ Biblioteca::Biblioteca(/* args */)
 Biblioteca::~Biblioteca()
 {
 }
- 
 
  
 class Usuario
 {
-private:
-   string cpf;
-   string nome;
-   string datanascimento;
-   vector<Livro> livrosemprestados;
-  
-public:
-   Usuario(string p_cpf, string p_nome, string p_datanascimento);
-   ~Usuario();
-   void livrosemprestadosUsuario();//determina quais livros estao com o usuario
-   string get_cpf(){
-      return cpf;
-   };
-   string get_nome(){
-      return nome;
-   };
-   string get_datanascimento(){
-      return datanascimento;
-   };
+   private:
+      string cpf;
+      string nome;
+      string datanascimento;
+      vector<Livro> livrosemprestados;
+   
+   public:
+
+      Usuario(string p_cpf, string p_nome, string p_datanascimento);
+
+      ~Usuario();
+      void livrosemprestadosUsuario();//determina quais livros estao com o usuario
+
+      string get_cpf(){
+         return cpf;
+      };
+      string get_nome(){
+         return nome;
+      };
+      string get_datanascimento(){
+         return datanascimento;
+      };
 };
  
 Usuario::Usuario(string p_cpf, string p_nome, string p_datanascimento){
- 
+      cpf = p_cpf;
+      nome = p_nome;
+      datanascimento = p_datanascimento;
 }
  
 Usuario::~Usuario()
@@ -71,18 +77,21 @@ Usuario::~Usuario()
 
 class Emprestimo
 {
-private:
-   string dataemprestimo;
-   Usuario user;
-   Livro livro; 
-   
-public:
-   Emprestimo(/* args */);
-   ~Emprestimo();
+   private:
+      string userName;
+      string dataEmprestimo;
+      Livro livro; 
+      
+   public:
+
+      Emprestimo(string p_dataemprestimo,string userName , Livro p_livro);
+      ~Emprestimo();
 };
 
-Emprestimo::Emprestimo(/* args */)
-{
+Emprestimo::Emprestimo(string p_dataemprestimo,string userName, Livro p_livro){
+   dataEmprestimo = p_dataemprestimo;
+   userName = userName;
+   livro = p_livro;
 }
 
 Emprestimo::~Emprestimo()
@@ -92,7 +101,8 @@ Emprestimo::~Emprestimo()
 class Reserva
 {
 private:
-   /* data */
+   string dataEmprestimo;
+   Livro livroReservado; 
 public:
    Reserva(/* args */);
    ~Reserva();
@@ -161,6 +171,11 @@ Item::~Item()
 int main(int argc, char const *argv[])
 {
    Biblioteca a;
+   Livro jose;
+
+   jose.set_nome("Jose");
+   cout << jose.get_nome() << endl;
+
    return 0;
 }
 
