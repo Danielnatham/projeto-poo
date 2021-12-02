@@ -78,7 +78,7 @@ Usuario::~Usuario()
 class Emprestimo
 {
    private:
-      string userName;
+      string usuarioNome;
       string dataEmprestimo;
       Livro livro; 
       
@@ -86,11 +86,15 @@ class Emprestimo
 
       Emprestimo(string p_dataemprestimo,string userName , Livro p_livro);
       ~Emprestimo();
+
+      string emprestimo_toString(){
+         return "Livro " + livro.get_nome() + " emprestado a " + usuarioNome + " Até dia " + dataEmprestimo;
+      }
 };
 
-Emprestimo::Emprestimo(string p_dataemprestimo,string userName, Livro p_livro){
+Emprestimo::Emprestimo(string p_dataemprestimo,string usuarioNome, Livro p_livro){
    dataEmprestimo = p_dataemprestimo;
-   userName = userName;
+   usuarioNome = usuarioNome;
    livro = p_livro;
 }
 
@@ -102,14 +106,22 @@ class Reserva
 {
 private:
    string dataEmprestimo;
+   string usuarioNome;
    Livro livroReservado; 
 public:
-   Reserva(/* args */);
+   Reserva(string p_dataemprestimo,string userName , Livro p_livro);
    ~Reserva();
+
+    string reserva_toString(){
+         return "Livro " + livroReservado.get_nome() + " reservado a " + usuarioNome + " Até dia " + dataEmprestimo;
+      }
 };
 
-Reserva::Reserva(/* args */)
+Reserva::Reserva(string p_dataemprestimo,string userName , Livro p_livro)
 {
+   dataEmprestimo = p_dataemprestimo;
+   usuarioNome = userName;
+   livroReservado = p_livro;
 }
 
 Reserva::~Reserva()
