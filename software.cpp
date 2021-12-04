@@ -30,16 +30,18 @@ public:
    void ShowALL(int op){
 
       if (op == 1){
-         for (int i = 0; i < livros.size() - 1; i++ ){
-            cout << "Livro: " << livros.at(i).get_nome() << endl;
+         for (int i = 0; i <= livros.size() - 1; i++ ){
+            string nome = livros.at(i).get_nome();
+            cout << "Livro " << i <<" "<< nome << endl;
          }   
       }
 
-      else if (op == 0){
-         for (int i = 0; i < usuarios.size() - 1; i++ ){
-            cout << "Usuario: " << usuarios.at(i).get_nome() << endl;
-         }
-      }
+      // else if (op == 0){
+      //    for (int i = 0; i < usuarios.size() - 1; i++ ){
+      //       string nome = usuarios.at(i).get_nome();
+      //       cout << "Usuario: " << nome << endl;
+      //    }
+      // }
 
       else {
          cout << "Operação Invalida" << endl;
@@ -83,9 +85,9 @@ class Usuario
       string get_cpf(){
          return cpf;
       };
-      string get_nome(){
-         return nome;
-      };
+
+      string get_nome();
+
       string get_datanascimento(){
          return datanascimento;
       };
@@ -103,6 +105,10 @@ Usuario::Usuario(string p_cpf, string p_nome, string p_datanascimento){
  
 Usuario::~Usuario()
 {
+}
+
+string Usuario::get_nome(){
+   return nome;
 }
 
 class Emprestimo
@@ -227,11 +233,14 @@ Item::~Item()
 int main(int argc, char const *argv[])
 {
    Biblioteca a;
-   Livro xadrez("Manual");
+   Livro primeiro, segundo ;
 
-   cout << "Livro " << xadrez.get_nome() << endl;
+   primeiro.set_nome("Manual");
+   segundo.set_nome("Xadrez");
 
-   a.Create(xadrez);
+
+   a.Create(primeiro);
+   a.Create(segundo);
    a.ShowALL(1);
 
    return 0;

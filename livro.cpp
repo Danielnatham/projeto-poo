@@ -23,6 +23,7 @@ Livro::~Livro()
     void Livro::set_editora(string p_editora){
         editora = p_editora;
     }
+    
     string Livro::get_editora()
     {
     return editora;
@@ -98,11 +99,6 @@ Livro::~Livro()
   int Livro::get_ano_lancamento()
   {
    return ano_lancamento;
-  }
-
-  int Livro::get_id()
-  {
-    return id;
   }
 
 //
