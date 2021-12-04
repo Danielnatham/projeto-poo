@@ -7,64 +7,6 @@
  
 using namespace std;
 
-class Usuario;
-
-
-class Biblioteca
-{
-private:
-   vector<Livro> livros;
-   vector<Usuario> usuarios;
-public:
-   Biblioteca(/* args */);
-   ~Biblioteca();
-   //CRUD
-   void Create(Livro livro){
-      livros.push_back(livro);
-   };//poe livro(s) na biblioteca
-
-   void Read(int op){
-
-   };//consulta um livro ou um usuario
-
-   void ShowALL(int op){
-
-      if (op == 1){
-         for (int i = 0; i <= livros.size() - 1; i++ ){
-            string nome = livros.at(i).get_nome();
-            cout << "Livro " << i <<" "<< nome << endl;
-         }   
-      }
-
-      // else if (op == 0){
-      //    for (int i = 0; i < usuarios.size() - 1; i++ ){
-      //       string nome = usuarios.at(i).get_nome();
-      //       cout << "Usuario: " << nome << endl;
-      //    }
-      // }
-
-      else {
-         cout << "Operação Invalida" << endl;
-      }
-
-   };//mostra todos os livros ou todos os usuarios da biblioteca
-   void Update();//atualiza dados do livro ou do usuario
-   void Delete();//deleta livro(s) ou usuario(s)
-   void Emprestar();//empresta livro(s). O(s) livro(s) emprestado(s) passa/passam para status de emprestado e o usuario passa a ter o(s) livro(s) em seu historico de livros adquiridos da biblioteca. 
-   void Devolucao();//Status do(s) livro(s) deixa/ deixam de ser emprestado e o usuario deixa de ter aquele(s) livro(s) em seu historico
-   void Adimplencia();//ver se o usuario possui algum livro em que ja se passou o prazo para entregar. Se sim, nao podera pegar outro livro emprestado
-   void relatorio_estatistico();
-};
- 
-Biblioteca::Biblioteca(/* args */)
-{
-}
- 
-Biblioteca::~Biblioteca()
-{
-}
-
- 
 class Usuario
 {
    private:
@@ -77,9 +19,10 @@ class Usuario
 
       Usuario();
 
-      Usuario(string p_cpf, string p_nome, string p_datanascimento);
+      Usuario(string p_nome, string p_cpf, string p_data_nascimento);
 
       ~Usuario();
+
       void livrosemprestadosUsuario();//determina quais livros estao com o usuario
 
       string get_cpf(){
@@ -87,6 +30,8 @@ class Usuario
       };
 
       string get_nome();
+
+      void set_livro(Livro livro);
 
       string get_datanascimento(){
          return datanascimento;
@@ -96,11 +41,11 @@ class Usuario
 Usuario::Usuario(){
 
 }
- 
-Usuario::Usuario(string p_cpf, string p_nome, string p_datanascimento){
-      cpf = p_cpf;
-      nome = p_nome;
-      datanascimento = p_datanascimento;
+
+Usuario::Usuario(string p_nome, string p_cpf, string p_data_nascimento){
+   nome = p_nome;
+   cpf = cpf;
+   datanascimento = p_data_nascimento;
 }
  
 Usuario::~Usuario()
@@ -110,6 +55,136 @@ Usuario::~Usuario()
 string Usuario::get_nome(){
    return nome;
 }
+
+void Usuario::set_livro(Livro livro){
+   livrosemprestados.push_back(livro);
+}
+
+
+class Biblioteca
+{
+private:
+   vector<Livro> livros;
+   vector<Usuario> usuarios;
+public:
+   Biblioteca(/* args */);
+   ~Biblioteca();
+   //CRUD
+   void Create_Livro(Livro livro){
+      livros.push_back(livro);
+   };//poe livro(s) na biblioteca
+
+   void Create_Usuario(Usuario user){
+      usuarios.push_back(user);
+   }
+
+   void Read(int op, string nome){
+      
+      if(op == 1){
+         int contador = 0;
+         for (int i = 0; i <= livros.size() - 1; i++ ){
+            string nome_objeto = livros.at(i).get_nome();
+            if(nome == nome_objeto){
+               contador++;
+               cout << "Livro - ID: " << i <<" | Nome:"<< nome_objeto << endl;
+            }
+            
+         }
+         if (contador == 0){
+            cout << "Livro " << nome << " não encontrado nessa biblioteca." << endl;
+         }   
+      }
+
+      if(op == 0){
+         int contador = 0;
+         for (int i = 0; i <= usuarios.size() - 1; i++ ){
+            string nome_objeto = usuarios.at(i).get_nome();
+            if(nome == nome_objeto){
+               contador++;
+               cout << "Usuario - ID: " << i <<" | Nome:"<< nome_objeto << endl;
+            }
+            
+         }
+         if (contador == 0){
+            cout << "Usuario " << nome << " não encontrado nessa biblioteca." << endl;
+         }   
+      }
+
+
+   };//consulta um livro ou um usuario
+
+   void ShowALL(int op){
+
+      if (op == 1){
+         for (int i = 0; i <= livros.size() - 1; i++ ){
+            string nome = livros.at(i).get_nome();
+            cout << "Livro - ID: " << i <<" | Nome: "<< nome << endl;
+         }   
+      }
+
+       else if (op == 0){
+          for (int i = 0; i <= usuarios.size() - 1; i++ ){
+             string nome = usuarios.at(i).get_nome();
+             cout << "Usuario - ID: " << i <<" | Nome: "<< nome << endl;
+         }
+      }
+
+      else {
+         cout << "Operação Invalida" << endl;
+      }
+
+   };//mostra todos os livros ou todos os usuarios da biblioteca
+   
+   void Update(int id){
+
+   };//atualiza dados do livro ou do usuario
+   
+   void Delete(int op,int id){
+      int novo_id = id;
+      if(op == 1){
+         Livro livro = livros.at(id);
+         livros.erase(livros.begin()+novo_id);
+         cout << "Livro " << livro.get_nome() << " removido com sucesso" << endl;
+      }
+      if(op == 0){
+         Usuario user = usuarios.at(id);
+         usuarios.erase(usuarios.begin()+novo_id);
+         cout << "Usuario " << user.get_nome() << " removido com sucesso" << endl;
+
+      }
+      else{
+         cout << "Operação Invalida" << endl;
+      }
+   };//deleta livro(s) ou usuario(s)
+   
+   //TODO: Setar propriedade emprestado no livro como true
+   void Emprestar(int id_usr, int id_lvr){
+      usuarios.at(id_usr).set_livro(livros.at(id_lvr));
+      cout << "Livro : " << livros.at(id_lvr).get_nome() << " Emprestado para: " << usuarios.at(id_usr).get_nome() << endl;
+   };//empresta livro(s). O(s) livro(s) emprestado(s) passa/passam para status de emprestado e o usuario passa a ter o(s) livro(s) em seu historico de livros adquiridos da biblioteca. 
+   
+   //TODO
+   void Devolucao();//Status do(s) livro(s) deixa/ deixam de ser emprestado e o usuario deixa de ter aquele(s) livro(s) em seu historico
+   
+   //TODO
+   void Adimplencia();//ver se o usuario possui algum livro em que ja se passou o prazo para entregar. Se sim, nao podera pegar outro livro emprestado
+   
+   void relatorio_estatistico(){
+      cout << "------LISTA DE LIVROS--------" << endl;
+      ShowALL(1);
+      cout << "-------LISTA DE USUARIOS-------" << endl;
+      ShowALL(0);
+   };
+};
+ 
+Biblioteca::Biblioteca(/* args */)
+{
+}
+ 
+Biblioteca::~Biblioteca()
+{
+}
+
 
 class Emprestimo
 {
@@ -233,15 +308,38 @@ Item::~Item()
 int main(int argc, char const *argv[])
 {
    Biblioteca a;
+
    Livro primeiro, segundo ;
+   Usuario jose("Jose", "123", "22031998"), mario("Mario", "123", "22031998"), carlos("Carlos", "123", "22031998");
+
 
    primeiro.set_nome("Manual");
    segundo.set_nome("Xadrez");
 
 
-   a.Create(primeiro);
-   a.Create(segundo);
+   a.Create_Livro(primeiro);
+   a.Create_Livro(segundo);
    a.ShowALL(1);
+
+   a.Create_Usuario(jose);
+   a.Create_Usuario(mario);
+   a.Create_Usuario(carlos);
+   a.ShowALL(0);
+
+   a.Read(1, "Xadrez");
+   a.Read(1, "Magnos");
+
+   a.Read(0, "Jose");
+   a.Read(0, "Mario");
+   a.Read(0, "Carlos");
+
+   a.Delete(0,2);
+   a.Read(0,"Carlos");
+
+   a.Emprestar(0,0);
+
+
+
 
    return 0;
 }

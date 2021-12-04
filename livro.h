@@ -7,7 +7,7 @@ class Livro {
   private:
     string nome;
     string autor;
-    int emprestado; //1=emprestado; 0=não esta emprestado
+    int emprestado = 0; //1=emprestado; 0=não esta emprestado
     string genero;
     int num_paginas;
     int ano_lancamento;
