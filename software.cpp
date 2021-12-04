@@ -19,9 +19,33 @@ public:
    Biblioteca(/* args */);
    ~Biblioteca();
    //CRUD
-   void Create();//poe livro(s) na biblioteca
-   void Read();//consulta um livro ou um usuario
-   void ShowALL();//mostra todos os livros ou todos os usuarios da biblioteca
+   void Create(Livro livro){
+      livros.push_back(livro);
+   };//poe livro(s) na biblioteca
+
+   void Read(int op){
+
+   };//consulta um livro ou um usuario
+
+   void ShowALL(int op){
+
+      if (op == 1){
+         for (int i = 0; i < livros.size() - 1; i++ ){
+            cout << "Livro: " << livros.at(i).get_nome() << endl;
+         }   
+      }
+
+      else if (op == 0){
+         for (int i = 0; i < usuarios.size() - 1; i++ ){
+            cout << "Usuario: " << usuarios.at(i).get_nome() << endl;
+         }
+      }
+
+      else {
+         cout << "Operação Invalida" << endl;
+      }
+
+   };//mostra todos os livros ou todos os usuarios da biblioteca
    void Update();//atualiza dados do livro ou do usuario
    void Delete();//deleta livro(s) ou usuario(s)
    void Emprestar();//empresta livro(s). O(s) livro(s) emprestado(s) passa/passam para status de emprestado e o usuario passa a ter o(s) livro(s) em seu historico de livros adquiridos da biblioteca. 
@@ -49,6 +73,8 @@ class Usuario
    
    public:
 
+      Usuario();
+
       Usuario(string p_cpf, string p_nome, string p_datanascimento);
 
       ~Usuario();
@@ -64,6 +90,10 @@ class Usuario
          return datanascimento;
       };
 };
+
+Usuario::Usuario(){
+
+}
  
 Usuario::Usuario(string p_cpf, string p_nome, string p_datanascimento){
       cpf = p_cpf;
@@ -78,21 +108,21 @@ Usuario::~Usuario()
 class Emprestimo
 {
    private:
-      string usuarioNome;
+      Usuario usuarioNome;
       string dataEmprestimo;
       Livro livro; 
       
    public:
 
-      Emprestimo(string p_dataemprestimo,string userName , Livro p_livro);
+      Emprestimo(string p_dataemprestimo,Usuario userName , Livro p_livro);
       ~Emprestimo();
 
       string emprestimo_toString(){
-         return "Livro " + livro.get_nome() + " emprestado a " + usuarioNome + " Até dia " + dataEmprestimo;
+         return "Livro " + livro.get_nome() + " emprestado a " + usuarioNome.get_nome() + " Até dia " + dataEmprestimo;
       }
 };
 
-Emprestimo::Emprestimo(string p_dataemprestimo,string usuarioNome, Livro p_livro){
+Emprestimo::Emprestimo(string p_dataemprestimo,Usuario usuarioNome, Livro p_livro){
    dataEmprestimo = p_dataemprestimo;
    usuarioNome = usuarioNome;
    livro = p_livro;
@@ -106,18 +136,18 @@ class Reserva
 {
 private:
    string dataEmprestimo;
-   string usuarioNome;
+   Usuario usuarioNome;
    Livro livroReservado; 
 public:
-   Reserva(string p_dataemprestimo,string userName , Livro p_livro);
+   Reserva(string p_dataemprestimo,Usuario userName , Livro p_livro);
    ~Reserva();
 
     string reserva_toString(){
-         return "Livro " + livroReservado.get_nome() + " reservado a " + usuarioNome + " Até dia " + dataEmprestimo;
+         return "Livro " + livroReservado.get_nome() + " reservado a " + usuarioNome.get_nome() + " Até dia " + dataEmprestimo;
       }
 };
 
-Reserva::Reserva(string p_dataemprestimo,string userName , Livro p_livro)
+Reserva::Reserva(string p_dataemprestimo,Usuario userName , Livro p_livro)
 {
    dataEmprestimo = p_dataemprestimo;
    usuarioNome = userName;
@@ -132,14 +162,25 @@ Reserva::~Reserva()
 class Periodico
 {
 private:
-   /* data */
+   string titulo;
+   Usuario autor;
+   string data_publicacao;
+
 public:
-   Periodico(/* args */);
+
+   Periodico(string titulo);
    ~Periodico();
+
+   string get_titulo(){
+      return titulo;
+   }
+
+   
 };
 
-Periodico::Periodico(/* args */)
+Periodico::Periodico(string titulo)
 {
+   titulo = titulo;
 }
 
 Periodico::~Periodico()
@@ -149,14 +190,17 @@ Periodico::~Periodico()
 class Monografia
 {
 private:
-   /* data */
+   string titulo;
+   Usuario autor;
+   string data_publicacao;
 public:
-   Monografia(/* args */);
+   Monografia(string titulo);
    ~Monografia();
 };
 
-Monografia::Monografia(/* args */)
+Monografia::Monografia(string titulo)
 {
+   titulo = titulo;
 }
 
 Monografia::~Monografia()
@@ -183,10 +227,12 @@ Item::~Item()
 int main(int argc, char const *argv[])
 {
    Biblioteca a;
-   Livro jose;
+   Livro xadrez("Manual");
 
-   jose.set_nome("Jose");
-   cout << jose.get_nome() << endl;
+   cout << "Livro " << xadrez.get_nome() << endl;
+
+   a.Create(xadrez);
+   a.ShowALL(1);
 
    return 0;
 }

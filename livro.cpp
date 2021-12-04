@@ -7,8 +7,12 @@
 using namespace std;
 
  
-Livro::Livro(/* args */){
+Livro::Livro(){
    
+}
+
+Livro::Livro(string nome){
+   nome = nome;
 }
  
 Livro::~Livro()
@@ -94,6 +98,11 @@ Livro::~Livro()
   int Livro::get_ano_lancamento()
   {
    return ano_lancamento;
+  }
+
+  int Livro::get_id()
+  {
+    return id;
   }
 
 //

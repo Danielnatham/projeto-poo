@@ -18,7 +18,8 @@ class Livro {
     string emprestimo;//OK;
 
     public:
-      Livro(/* args */);
+      Livro();
+      Livro(string nome);
       ~Livro();
       void set_editora(string p_editora);//OK
       void set_nome(string p_nome);//OK
@@ -30,6 +31,7 @@ class Livro {
       void set_quantidade(int p_quantidade);
       void data_emprestado_inicio(string p_dataEmprestadoInicio);//data em que o livro foi emprestado
       void data_emprestado_fim(string p_dataEmprestadoFim);//data em que o livro foi devolvido
+      int get_id();
       string get_nome();//OK
       string get_editora();//OK
       string get_autor();//OK
