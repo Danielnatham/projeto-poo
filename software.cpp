@@ -14,7 +14,8 @@ class Usuario
       string nome;
       string datanascimento;
       vector<Livro> livrosemprestados;
-   
+      int adimplencia; //Se 0 esta ok, se 1 esta inadimplente
+
    public:
 
       Usuario();
@@ -23,7 +24,7 @@ class Usuario
 
       ~Usuario();
 
-      void livrosemprestadosUsuario();//determina quais livros estao com o usuario
+      vector<Livro> livrosemprestadosUsuario();//determina quais livros estao com o usuario
 
       string get_cpf(){
          return cpf;
@@ -32,6 +33,8 @@ class Usuario
       string get_nome();
 
       void set_livro(Livro livro);
+
+      void unset_livro(Livro livro);
 
       string get_datanascimento(){
          return datanascimento;
@@ -56,10 +59,23 @@ string Usuario::get_nome(){
    return nome;
 }
 
+vector<Livro> Usuario::livrosemprestadosUsuario(){
+	return livrosemprestados;
+}
+
 void Usuario::set_livro(Livro livro){
    livrosemprestados.push_back(livro);
 }
 
+void Usuario::unset_livro(Livro livro){
+    auto index = livrosemprestados.begin();
+    for(auto & li : livrosemprestados){
+        if(li.get_nome() == livro.get_nome()){
+	    livrosemprestados.erase(index);
+	}
+	++index;
+    }
+}
 
 class Biblioteca
 {
@@ -157,17 +173,23 @@ public:
       }
    };//deleta livro(s) ou usuario(s)
    
-   //TODO: Setar propriedade emprestado no livro como true
+   
    void Emprestar(int id_usr, int id_lvr){
       usuarios.at(id_usr).set_livro(livros.at(id_lvr));
+      livros.at(id_lvr).set_emprestado(1);
       cout << "Livro : " << livros.at(id_lvr).get_nome() << " Emprestado para: " << usuarios.at(id_usr).get_nome() << endl;
    };//empresta livro(s). O(s) livro(s) emprestado(s) passa/passam para status de emprestado e o usuario passa a ter o(s) livro(s) em seu historico de livros adquiridos da biblioteca. 
    
-   //TODO
-   void Devolucao();//Status do(s) livro(s) deixa/ deixam de ser emprestado e o usuario deixa de ter aquele(s) livro(s) em seu historico
    
-   //TODO
-   void Adimplencia();//ver se o usuario possui algum livro em que ja se passou o prazo para entregar. Se sim, nao podera pegar outro livro emprestado
+   void Devolucao(int id_usr, int id_lvr){
+	   usuarios.at(id_usr).unset_livro(livros.at(id_lvr));
+	   livros.at(id_lvr).set_emprestado(0);
+   };//Status do(s) livro(s) deixa/ deixam de ser emprestado e o usuario deixa de ter aquele(s) livro(s) em seu historico
+   
+   
+   void Adimplencia(int id_usr){
+	   
+   };//ver se o usuario possui algum livro em que ja se passou o prazo para entregar. Se sim, nao podera pegar outro livro emprestado
    
    void relatorio_estatistico(){
       cout << "------LISTA DE LIVROS--------" << endl;
@@ -239,24 +261,49 @@ Reserva::~Reserva()
 {
 }
 
-
-class Periodico
+class Item 
 {
 private:
-   string titulo;
-   Usuario autor;
-   string data_publicacao;
+    string titulo;
+    string autor;
+    string data_publicacao;
+public:
+    Item();
 
+    ~Item();
+
+    string get_titulo();
+
+    string get_autor();
+
+    string get_data_publicacao();
+
+};
+
+Item::Item(){}
+
+Item::~Item(){}
+
+string Item::get_titulo(){
+	return titulo;
+}
+
+string Item::get_autor(){
+	return autor;
+}
+
+string Item::get_data_publicacao(){
+	return data_publicacao;
+}
+
+class Periodico: public Item
+{
 public:
 
    Periodico(string titulo);
+  
    ~Periodico();
 
-   string get_titulo(){
-      return titulo;
-   }
-
-   
 };
 
 Periodico::Periodico(string titulo)
@@ -268,15 +315,13 @@ Periodico::~Periodico()
 {
 }
 
-class Monografia
-{
-private:
-   string titulo;
-   Usuario autor;
-   string data_publicacao;
+class Monografia: public Item
+{ 
 public:
-   Monografia(string titulo);
-   ~Monografia();
+    Monografia(string titulo);
+   
+    ~Monografia();
+
 };
 
 Monografia::Monografia(string titulo)
@@ -288,34 +333,18 @@ Monografia::~Monografia()
 {
 }
 
-class Item
-{
-private:
-   /* data */
-public:
-   Item(/* args */);
-   ~Item();
-};
-
-Item::Item(/* args */)
-{
-}
-
-Item::~Item()
-{
-}
-
 int main(int argc, char const *argv[])
 {
    Biblioteca a;
 
    Livro primeiro, segundo ;
    Usuario jose("Jose", "123", "22031998"), mario("Mario", "123", "22031998"), carlos("Carlos", "123", "22031998");
-
+   Monografia mono("Primeira Monografia");
 
    primeiro.set_nome("Manual");
    segundo.set_nome("Xadrez");
 
+   cout << "Minha monografia: " << mono.get_titulo() << endl;	
 
    a.Create_Livro(primeiro);
    a.Create_Livro(segundo);
@@ -337,9 +366,9 @@ int main(int argc, char const *argv[])
    a.Read(0,"Carlos");
 
    a.Emprestar(0,0);
+   a.Emprestar(0,1);	
 
-
-
+   a.relatorio_estatistico();
 
    return 0;
 }
