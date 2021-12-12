@@ -31,6 +31,8 @@ class Usuario
       };
 
       string get_nome();
+      
+      void set_nome(string nome);
 
       void set_livro(Livro livro);
 
@@ -61,6 +63,10 @@ string Usuario::get_nome(){
 
 vector<Livro> Usuario::livrosemprestadosUsuario(){
 	return livrosemprestados;
+}
+
+void Usuario::set_nome(string nome){
+	nome = nome;
 }
 
 void Usuario::set_livro(Livro livro){
@@ -151,9 +157,19 @@ public:
 
    };//mostra todos os livros ou todos os usuarios da biblioteca
    
-   void Update(int id){
-
+   void Update_Usuario(Usuario novo_usuario, int id){
+	
+	usuarios.at(id).set_nome(novo_usuario.get_nome());
+	cout << "Usuario: " << novo_usuario.get_nome() << "alterado com sucesso" << endl;
+	
    };//atualiza dados do livro ou do usuario
+
+   void Update_Livro(Livro novo_livro, int id){
+
+	livros.at(id).set_nome(novo_livro.get_nome());
+	cout << "Livro: " << novo_livro.get_nome() << "alterado com sucesso" << endl;
+  
+   }
    
    void Delete(int op,int id){
       int novo_id = id;
@@ -186,10 +202,6 @@ public:
 	   livros.at(id_lvr).set_emprestado(0);
    };//Status do(s) livro(s) deixa/ deixam de ser emprestado e o usuario deixa de ter aquele(s) livro(s) em seu historico
    
-   
-   void Adimplencia(int id_usr){
-	   
-   };//ver se o usuario possui algum livro em que ja se passou o prazo para entregar. Se sim, nao podera pegar outro livro emprestado
    
    void relatorio_estatistico(){
       cout << "------LISTA DE LIVROS--------" << endl;
