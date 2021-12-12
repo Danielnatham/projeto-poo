@@ -13,10 +13,10 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
   - [x] Ajustar arquivo livro.cpp
 - Classe Biblioteca
   - [x] Implementar o CRUD
-  - [ ] Implementar as funções extras
+  - [x] Implementar as funções extras
 - Classe Usuário
   - [x] Implementar os getters e setters
-  - [ ] Ajustar propriedade de livros emprestados
+  - [x] Ajustar propriedade de livros emprestados
 - Classe Empréstimo e Classe Reserva
   - [x] Implementar as funções nescessarias
 - Classe Periódico, Item e Monografia
