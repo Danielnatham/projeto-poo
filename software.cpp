@@ -14,8 +14,7 @@ class Usuario
       string nome;
       string datanascimento;
       vector<Livro> livrosemprestados;
-      int adimplencia; //Se 0 esta ok, se 1 esta inadimplente
-
+     
    public:
 
       Usuario();
